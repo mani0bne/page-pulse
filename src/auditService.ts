@@ -170,18 +170,18 @@ export class AuditService {
       });
 
       const loadTime = Date.now() - startTime;
-      const contentLength = parseInt(
-        response.headers['content-length'] || '0',
-        10
-      );
+      const contentLengthHeader = response.headers['content-length'];
+      const contentLength = typeof contentLengthHeader === 'string' 
+        ? parseInt(contentLengthHeader, 10)
+        : 0;
 
       return {
         status: response.status,
         statusText: response.statusText || 'OK',
-        contentType: response.headers['content-type'],
+        contentType: String(response.headers['content-type'] || ''),
         contentLength,
         loadTime,
-        headers: this.extractRelevantHeaders(response.headers),
+        headers: this.extractRelevantHeaders(response.headers as Record<string, any>),
         links: this.analyzeLinks(response.data),
         ssl: this.extractSSLInfo(response),
       };
