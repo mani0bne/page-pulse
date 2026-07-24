@@ -31,7 +31,7 @@ app.use(requestContextMiddleware(logger));
 app.use(rateLimitMiddleware(rateLimiter));
 
 app.get('/health', (req: Request, res: Response) => {
-  const context = req.context || {};
+  const context = (req.context as any) || {};
   logger.info('Health check', context);
   res.json({
     status: 'healthy',
@@ -41,7 +41,7 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 app.get('/', (req: Request, res: Response) => {
-  const context = req.context || {};
+  const context = (req.context as any) || {};
   const htmlContent = `
     <!DOCTYPE html>
     <html lang="en">
@@ -209,7 +209,7 @@ app.get('/', (req: Request, res: Response) => {
     <body>
       <div class="container">
         <header>
-          <h1>���� Page Pulse</h1>
+          <h1>🚀 Page Pulse</h1>
           <p class="tagline">Advanced URL Auditing & Monitoring Service</p>
         </header>
 
@@ -272,7 +272,7 @@ app.post('/audit', async (req: Request, res: Response, next) => {
   try {
     const { url, timeout, followRedirects } = req.body;
     const requestId = uuidv4();
-    const context = req.context || {};
+    const context = (req.context as any) || {};
 
     if (!url) {
       logger.warn('Missing URL in audit request', { ...context, requestId });
@@ -297,7 +297,7 @@ app.post('/audit', async (req: Request, res: Response, next) => {
 });
 
 app.get('/stats', (req: Request, res: Response) => {
-  const context = req.context || {};
+  const context = (req.context as any) || {};
   const cacheStats = cache.getStats();
   const concurrencyStats = auditService.getConcurrencyStats();
 
