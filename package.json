@@ -2,7 +2,7 @@
   "name": "page-pulse",
   "version": "1.0.0",
   "description": "Production-grade URL audit service with caching, rate limiting, and comprehensive testing",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",
