@@ -20,7 +20,7 @@ export class Cache<T> {
     evictions: 0,
   };
   private maxSize: number;
-  private cleanupInterval: NodeJS.Timer;
+  private cleanupInterval: NodeJS.Timeout | null = null;
 
   constructor(maxSize: number = 1000, cleanupIntervalMs: number = 60000) {
     this.maxSize = maxSize;
